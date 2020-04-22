@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 const TransactionSchema = new mongoose.Schema({
   text: {
@@ -16,4 +16,10 @@ const TransactionSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Transaction', TransactionSchema);
+interface ITransaction extends Document {
+  text: string;
+  amount: number;
+  createdAt: string;
+}
+
+export default mongoose.model<ITransaction>('Transaction', TransactionSchema);
