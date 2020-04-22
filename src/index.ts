@@ -8,10 +8,12 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import colors from 'colors';
 import 'module-alias/register';
+import connectDB from './config/db';
 import transactionRouter from '@routes/transactions';
 
 dotenv.config();
 colors.enable();
+connectDB();
 
 const app = Express();
 
