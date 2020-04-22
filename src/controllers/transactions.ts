@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import Transaction from '@models/Transaction';
 
 //  @desc    Get all transactions
 //  @route   GET /api/v1/transactions
