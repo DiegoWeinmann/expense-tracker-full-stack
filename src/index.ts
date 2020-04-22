@@ -7,6 +7,8 @@ import Express, {
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import colors from 'colors';
+import 'module-alias/register';
+import transactionRouter from '@routes/transactions';
 
 dotenv.config();
 colors.enable();
@@ -17,12 +19,11 @@ const PORT = process.env.PORT || 5000;
 
 app.use(morgan('dev'));
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Hello World');
-});
+app.use('/api/v1/transactions', transactionRouter);
 
 app.listen(PORT, () => {
   console.log(
-    `Server in ${process.env.NODE_ENV} mode listening on Port: ${PORT}`.blue
+    `Server in ${process.env.NODE_ENV} mode listening on Port: ${PORT}`.yellow
+      .bold
   );
 });
