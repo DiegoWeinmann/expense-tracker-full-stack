@@ -20,6 +20,7 @@ const app = Express();
 const PORT = process.env.PORT || 5000;
 
 app.use(morgan('dev'));
+app.use(Express.json());
 
 app.use('/api/v1/transactions', transactionRouter);
 

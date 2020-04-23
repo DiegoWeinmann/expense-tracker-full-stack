@@ -1,4 +1,5 @@
 import mongoose, { Document } from 'mongoose';
+import { ITransaction } from '@types';
 
 const TransactionSchema = new mongoose.Schema({
   text: {
@@ -15,11 +16,5 @@ const TransactionSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
-interface ITransaction extends Document {
-  text: string;
-  amount: number;
-  createdAt: string;
-}
 
 export default mongoose.model<ITransaction>('Transaction', TransactionSchema);

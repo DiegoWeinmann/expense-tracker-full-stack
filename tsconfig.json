@@ -12,7 +12,9 @@
     "paths": {
       "@routes/*": ["routes/*"],
       "@controllers/*": ["controllers/*"],
-      "@models/*": ["models/*"]
+      "@models/*": ["models/*"],
+      "@types": ["types.ts"],
+      "@utils/*": ["utils/*"]
     }
   },
   "exclude": ["node_modules", "./client/**/*"],
