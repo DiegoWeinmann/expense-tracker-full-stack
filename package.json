@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
+    "dev:server": "ts-node-dev src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "dev:client": "npm start --prefix client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
   "keywords": [],
   "author": "",
