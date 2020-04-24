@@ -17,6 +17,16 @@ export const AppReducer: GlobalStateReducer = (
         ...state,
         transactions: [...state.transactions, action.transaction],
       };
+    case 'SET_TRANSACTIONS':
+      return {
+        ...state,
+        transactions: [...action.transactions],
+      };
+    case 'SET_ERROR':
+      return {
+        ...state,
+        error: action.error,
+      };
     default:
       return state;
   }
