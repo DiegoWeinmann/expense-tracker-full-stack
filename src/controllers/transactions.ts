@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import Transaction from '@models/Transaction';
 import { RequestWithBody, TransactionJSON } from '@types';
 import transformTransaction from '@utils/transformTransaction';
+import { Error } from 'mongoose';
 
 //  @desc    Get all transactions
 //  @route   GET /api/v1/transactions
@@ -43,7 +44,20 @@ const addTransaction: RequestHandler = async (
       data: transaction,
     });
   } catch (error) {
-    console.log(error);
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(
+        (err) => (err as Error).message
+      );
+      return res.status(400).json({
+        success: false,
+        error: messages,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error',
+      });
+    }
   }
 };
 
@@ -52,6 +66,25 @@ const addTransaction: RequestHandler = async (
 //  @access  Public
 
 const deleteTransaction: RequestHandler = async (req, res, next) => {
-  res.send('DELETE transaction');
+  try {
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) {
+      return res.status(401).json({
+        success: false,
+        error: 'No transaction found.',
+      });
+    }
+
+    await transaction.remove();
+    return res.status(200).json({
+      success: true,
+      data: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server error.',
+    });
+  }
 };
 export { getTransactions, addTransaction, deleteTransaction };
