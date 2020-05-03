@@ -41,7 +41,7 @@ const addTransaction: RequestHandler = async (
     });
     return res.status(201).json({
       success: true,
-      data: transaction,
+      data: transaction.toObject({ getters: true }),
     });
   } catch (error) {
     if (error.name === 'ValidationError') {

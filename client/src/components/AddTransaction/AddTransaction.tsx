@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { nanoid } from 'nanoid';
 
 import { GlobalContextDispatch } from '../../context/GlobalState';
@@ -13,7 +13,7 @@ export const AddTransaction: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     axios
-      .post<any, Transaction>(
+      .post<any, AxiosResponse<{ data: Transaction }>>(
         '/api/v1/transactions',
         {
           text,
@@ -29,7 +29,7 @@ export const AddTransaction: React.FC = () => {
         dispatch({
           type: 'ADD_TRANSACTION',
           transaction: {
-            id: nanoid(),
+            id: response.data.data.id,
             text,
             amount: Number(amount),
           },
