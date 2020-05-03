@@ -10,9 +10,9 @@ const initialState: GlobalState = {
 };
 
 export const GlobalContext = createContext<GlobalState>(initialState);
-export const GlobalContextDispatch = createContext<GlobalStateDispatch>({
-  dispatch: () => {},
-});
+export const GlobalContextDispatch = createContext<GlobalStateDispatch>(
+  () => {}
+);
 
 export const GlobalProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer<GlobalStateReducer>(
@@ -28,7 +28,7 @@ export const GlobalProvider: React.FC = ({ children }) => {
         loading: state.loading,
       }}
     >
-      <GlobalContextDispatch.Provider value={{ dispatch }}>
+      <GlobalContextDispatch.Provider value={dispatch}>
         {children}
       </GlobalContextDispatch.Provider>
     </GlobalContext.Provider>

@@ -1,23 +1,46 @@
 import React, { useState, useContext } from 'react';
+import axios, { AxiosError } from 'axios';
 import { nanoid } from 'nanoid';
 
 import { GlobalContextDispatch } from '../../context/GlobalState';
+import { Transaction } from '../../types';
 
 export const AddTransaction: React.FC = () => {
-  const { dispatch } = useContext(GlobalContextDispatch);
+  const dispatch = useContext(GlobalContextDispatch);
   const [text, setText] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    dispatch({
-      type: 'ADD_TRANSACTION',
-      transaction: {
-        id: nanoid(),
-        text,
-        amount: Number(amount),
-      },
-    });
+    axios
+      .post<any, Transaction>(
+        '/api/v1/transactions',
+        {
+          text,
+          amount,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then((response) => {
+        dispatch({
+          type: 'ADD_TRANSACTION',
+          transaction: {
+            id: nanoid(),
+            text,
+            amount: Number(amount),
+          },
+        });
+      })
+      .catch((error: AxiosError) => {
+        dispatch({
+          type: 'SET_ERROR',
+          error: error.response?.data.error || 'Server Error.',
+        });
+      });
   };
 
   return (

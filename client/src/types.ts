@@ -1,5 +1,5 @@
 export interface Transaction {
-  id: string;
+  id?: string;
   text: string;
   amount: number;
 }
@@ -42,6 +42,4 @@ export type GlobalStateReducer = (
   action: GlobalStateActions
 ) => GlobalState;
 
-export interface GlobalStateDispatch {
-  dispatch: React.Dispatch<GlobalStateActions>;
-}
+export type GlobalStateDispatch = React.Dispatch<GlobalStateActions>;

@@ -8,7 +8,7 @@ import { Error } from 'mongoose';
 //  @route   GET /api/v1/transactions
 //  @access  Public
 
-const getTransactions: RequestHandler = async (req, res, next) => {
+const getTransactions: RequestHandler = async (_req, res) => {
   try {
     const transactions = await Transaction.find();
     return res.status(200).json({
@@ -65,9 +65,10 @@ const addTransaction: RequestHandler = async (
 //  @route   DELETE /api/v1/transactions/:id
 //  @access  Public
 
-const deleteTransaction: RequestHandler = async (req, res, next) => {
+const deleteTransaction: RequestHandler = async (req, res) => {
   try {
     const transaction = await Transaction.findById(req.params.id);
+
     if (!transaction) {
       return res.status(401).json({
         success: false,
